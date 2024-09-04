@@ -7,29 +7,37 @@ import PacientesList from './assets/components/PacientesList'
 
 export default function App() {
 
-  const [pacientes, setPacientes] = useState([])
+  console.log('Componente renderizado...')
+
+  const [pacientes, setPacientes] = useState(() => {
+    const pacienteStorage = JSON.parse(localStorage.getItem('pacientes')) ?? []
+    return pacienteStorage
+  });
+  //     console.log('Get paciente',pacienteStorage)
+  //     setPacientes(pacienteStorage))
+
+
   const [paciente, setPaciente] = useState({})
 
-  useEffect(() => {
-    const getLS = () => {
-      const pacienteStorage = JSON.parse(localStorage.getItem('pacientes')) && [];
-      //console.log(pacienteStorage)
-      setPacientes(pacienteStorage)
-    }
-    getLS();
-  },  [])
+  useEffect(() => console.log('useEffect for here'), [])
+
+  // useEffect(() => {
+  //   const getLS = () => {
+  //     const pacienteStorage = JSON.parse(localStorage.getItem('pacientes')) ?? [];
+  //     console.log('Get paciente',pacienteStorage)
+  //     setPacientes(pacienteStorage)
+  //   }
+  //   getLS();
+  // },  [])
 
 
   useEffect(() => {
     localStorage.setItem('pacientes',JSON.stringify(pacientes))
-    console.log(pacientes)
+    console.log('Set paciente',pacientes)
   }, [pacientes] )
 
-  console.log(pacientes)
 
 
-
-  
 
   const eliminarPaciente = id => { 
     const pacientesActualizados = pacientes.filter( paciente => paciente.id !== id )
